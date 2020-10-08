@@ -38,7 +38,12 @@ function Header({dropdown}) {
     return (
         <div className="header">
            {dropdown &&<div className="dropdown">
-                <span onClick={logout}>Logout</span>
+                <div className="center">
+                    <img src={user.photoURL} alt=""/>
+                    <h3>{user.displayName}</h3>
+                    <h5>{user.email}</h5>
+                    <span onClick={logout}>Logout</span>
+                </div>
             </div>}
             <div className="add">
                 <div><h1>Welcome </h1><h2>{user.displayName}</h2></div>
