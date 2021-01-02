@@ -5,19 +5,22 @@ import {db} from '../firebase'
 import { useStateValue } from '../StateProvider';
 import Empty from './Empty';
 
-function Content() {
+function Content({setAlert}) {
     const [notes,setNotes] = useState("")
+    const [docid,setDocid] = useState("")
 
-    const [{user},dispatch] = useStateValue();
+    const [{user}] = useStateValue();
     useEffect(()=>{
-       db.collection("users").doc(user.uid).onSnapshot((doc)=>{
+       user && db.collection("users").doc(user.uid).onSnapshot((doc)=>{
         setNotes(doc.data().notes);
+        setDocid(doc.id)
        }) 
     },[])
     return (
         <div className="content">
-            {notes?notes.map((note)=>{
-                return <Note title={note.title} content={note.content} color={note.color} key={note.id}/>
+            
+            {notes.length >0?notes.map((note)=>{
+                return <Note title={note.title} content={note.content} color={note.color} key={note.id} id={note.id} docid ={docid} setAlert={setAlert} />
             }):<Empty/>}
             
         </div>

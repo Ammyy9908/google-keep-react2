@@ -9,7 +9,6 @@ function Login() {
     const [error,setError] = useState(null);
     const GoogleLogin = ()=>{
         auth.signInWithPopup(provider).then((cred)=>{
-            console.log(cred.user);
             db.collection("users").doc(cred.user.uid).get().then((doc)=>{
                 if(doc.exists){
                     return 1;
@@ -20,7 +19,8 @@ function Login() {
                         name:cred.user.displayName,
                         avatar:cred.user.photoURL,
                         email:cred.user.email,
-                        notes:[]
+                        notes:[],
+                        trash:[],
                     }).then(()=>{
                         console.log("Done");
                     })
